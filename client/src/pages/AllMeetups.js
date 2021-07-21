@@ -5,28 +5,53 @@ export default function AllMeetUpPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch(
+  //     'https://academind-react-2021-default-rtdb.firebaseio.com/meetup.json',
+  //   )
+  //     .then(response => {
+  //       // json method returns a promise, need to return it to be thenable
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       console.log(data);
+  //       const meetups = [];
+  //       for (const key in data) {
+  //         const meetup = {
+  //           id: key,
+  //           ...data[key],
+  //         };
+  //         meetups.push(meetup);
+  //       }
+  //       const newestFirst = meetups.reverse();
+  //       setLoadedMeetups(newestFirst);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+
   useEffect(() => {
     setIsLoading(true);
-    fetch(
-      'https://academind-react-2021-default-rtdb.firebaseio.com/meetup.json',
-    )
-      .then(response => {
-        // json method returns a promise, need to return it to be thenable
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        const meetups = [];
-        for (const key in data) {
-          const meetup = {
-            id: key,
-            ...data[key],
-          };
-          meetups.push(meetup);
-        }
-        setLoadedMeetups(meetups);
-        setIsLoading(false);
-      });
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://academind-react-2021-default-rtdb.firebaseio.com/meetup.json',
+      );
+      const data = await response.json();
+      // console.log(data);
+      // transform keyed dictionary object data to array of objects
+      const meetups = [];
+      for (const key in data) {
+        const meetup = {
+          id: key,
+          ...data[key],
+        };
+        meetups.push(meetup);
+      }
+      const newestFirst = meetups.reverse();
+      setLoadedMeetups(newestFirst);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
 
   if (isLoading) {
