@@ -4,21 +4,21 @@ import Card from '../ui/Card';
 import classes from './MeetupItem.module.css';
 import FavoritesContext from '../../store/favorites-context';
 
-function MeetupItem(props) {
+function MeetupItem({ id, title, description, image, address }) {
   const favoritesCtx = useContext(FavoritesContext);
 
-  const itemIsFavorite = favoritesCtx.itemIsFavorite(props.id);
+  const itemIsFavorite = favoritesCtx.itemIsFavorite(id);
 
   function toggleFavoriteStatusHandler() {
     if (itemIsFavorite) {
-      favoritesCtx.removeFavorite(props.id);
+      favoritesCtx.removeFavorite(id);
     } else {
       favoritesCtx.addFavorite({
-        id: props.id,
-        title: props.title,
-        description: props.description,
-        image: props.image,
-        address: props.address,
+        id: id,
+        title: title,
+        description: description,
+        image: image,
+        address: address,
       });
     }
   }
@@ -27,12 +27,12 @@ function MeetupItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.image}>
-          <img src={props.image} alt={props.title} />
+          <img src={image} alt={title} />
         </div>
         <div className={classes.content}>
-          <h3>{props.title}</h3>
-          <address>{props.address}</address>
-          <p>{props.description}</p>
+          <h3>{title}</h3>
+          <address>{address}</address>
+          <p>{description}</p>
         </div>
         <div className={classes.actions}>
           <button onClick={toggleFavoriteStatusHandler}>
