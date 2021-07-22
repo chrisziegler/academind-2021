@@ -1,22 +1,17 @@
 import { createContext, useState } from 'react';
 
-// this will contain a react component
 const FavoritesContext = createContext({
   favorites: [],
   totalFavorites: 0,
-  // below just gives better IDE auto-completition later
   addFavorite: favoriteMeetup => {},
   removeFavorite: meetupId => {},
   itemIsFavorite: meetupId => {},
 });
 
-function FavoritesContextProvider(props) {
+export function FavoritesContextProvider(props) {
   const [userFavorites, setUserFavorites] = useState([]);
 
   function addFavoriteHandler(favoriteMeetup) {
-    // this pattern gets "scheduled" - may not update state right away
-    // setUserFavorites(userFavorites.concat(favoriteMeetup))
-    // this will guarantee we get the latest state snapshot
     setUserFavorites(prevUserFavorites => {
       return prevUserFavorites.concat(favoriteMeetup);
     });
@@ -37,7 +32,7 @@ function FavoritesContextProvider(props) {
   const context = {
     favorites: userFavorites,
     totalFavorites: userFavorites.length,
-    addfavorite: addFavoriteHandler,
+    addFavorite: addFavoriteHandler,
     removeFavorite: removeFavoriteHandler,
     itemIsFavorite: itemIsFavoriteHandler,
   };
@@ -49,4 +44,4 @@ function FavoritesContextProvider(props) {
   );
 }
 
-export default FavoritesContextProvider;
+export default FavoritesContext;
