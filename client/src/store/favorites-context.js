@@ -1,5 +1,8 @@
 import { createContext, useState } from 'react';
 
+// values in this scope are being set by the state of the component below
+// we use this default import throughout project as needed
+// whereas named export component just gets used to wrap entire project in index.js
 const FavoritesContext = createContext({
   favorites: [],
   totalFavorites: 0,

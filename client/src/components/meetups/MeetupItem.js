@@ -6,7 +6,7 @@ import FavoritesContext from '../../store/favorites-context';
 
 function MeetupItem({ id, title, description, image, address }) {
   const favoritesCtx = useContext(FavoritesContext);
-
+  // console.log(favoritesCtx);
   const itemIsFavorite = favoritesCtx.itemIsFavorite(id);
 
   function toggleFavoriteStatusHandler() {
